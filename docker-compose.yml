@@ -25,6 +25,14 @@ services:
       - bundle:/usr/local/bundle
     depends_on:
       - db
+  frontend:
+    build: ./hubfan-frontend
+    container_name: hubfan_next_frontend
+    command: bash -c "yarn run dev"
+    volumes:
+      - ./hubfan-frontend/app:/hubfan-frontend
+    ports:
+      - 8000:3000
 volumes:
   data-store:
   bundle:
