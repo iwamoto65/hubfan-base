@@ -3,13 +3,28 @@ version: '3'
 services:
   db:
     image: mysql:8.0
+    container_name: hubfan_mysql_db
     volumes:
       - data-store:/var/lib/mysql
     environment:
-      - MYSQL_USER: root
-      - MYSQL_ROOT_PASSWORD: password
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - 3306:3306
+  backend:
+    build: ./hubfan-backend
+    container_name: hubfan_rails_backend
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    tty: true
+    stdin_open: true
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    depends_on:
+      - db
 volumes:
   data-store:
-    driver: local
+  bundle:
