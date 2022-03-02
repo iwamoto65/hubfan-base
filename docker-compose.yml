@@ -21,7 +21,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/app
+      - ./hubfan-backend:/hubfan-backend
       - bundle:/usr/local/bundle
     depends_on:
       - db
