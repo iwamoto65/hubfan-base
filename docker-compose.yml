@@ -37,6 +37,16 @@ services:
       - 8000:8000
     depends_on:
       - backend
+  admin:
+    build: ./hubfan-admin
+    container_name: hubfan_admin
+    command: bash -c "yarn run dev -p 4000"
+    volumes:
+      - ./hubfan-admin/app:/hubfan-admin
+    ports:
+      - 4000:4000
+    depends_on:
+      - frontend
 volumes:
   data-store:
   bundle:
